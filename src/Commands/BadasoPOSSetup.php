@@ -55,7 +55,7 @@ class BadasoPOSSetup extends Command
     public function publishConfig()
     {
         $params = [
-            '--tag' => 'badaso-sitemap-config',
+            '--tag' => 'badaso-POS-config',
             '--force' => $this->force,
         ];
         $this->call('vendor:publish', $params);
