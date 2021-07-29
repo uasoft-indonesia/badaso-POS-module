@@ -26,7 +26,10 @@ class BadasoPOSModuleServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
         $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'badaso_POS');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'badaso_pos');
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'pos-module');
 
         $this->publishes([
             __DIR__.'/../Seeder' => database_path('seeders/Badaso/POS'),

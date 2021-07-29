@@ -47,6 +47,7 @@ class BadasoPOSSetup extends Command
             }
 
             $this->publishConfig();
+            $this->updateWebpackMix();
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -59,5 +60,27 @@ class BadasoPOSSetup extends Command
             '--force' => $this->force,
         ];
         $this->call('vendor:publish', $params);
+    }
+
+    protected function updateWebpackMix()
+    {
+        // mix
+        $mix_file = base_path('webpack.mix.js');
+        $search = 'Badaso-Pos';
+
+        if ($this->checkExist($mix_file, $search)) {
+            $data = <<<'EOT'
+
+                // Badaso-Pos
+                mix.js(
+                    "packages/badaso/POS-module/src/resources/js-pos/app.js",
+                    "public/js/badaso-pos.js"
+                ).vue();
+            EOT;
+
+            $this->file->append($mix_file, $data);
+        }
+
+        $this->info('webpack.mix.js updated');
     }
 }

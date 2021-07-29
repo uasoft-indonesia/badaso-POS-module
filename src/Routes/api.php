@@ -10,7 +10,7 @@ Route::group(
     [
         'prefix' => $api_route_prefix,
         'namespace' => 'Uasoft\Badaso\Module\POS\Controllers',
-        'as' => 'badaso.module.POS.',
+        'as' => 'badaso.module.pos.',
         'middleware' => [ApiRequest::class],
     ],
     function () {

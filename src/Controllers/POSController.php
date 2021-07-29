@@ -6,4 +6,8 @@ use App\Http\Controllers\Controller;
 
 class POSController extends Controller
 {
+    public function index()
+    {
+        return view('pos-module::pos.index');
+    }
 }
