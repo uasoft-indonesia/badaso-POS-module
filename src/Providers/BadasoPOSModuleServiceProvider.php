@@ -3,7 +3,6 @@
 namespace Uasoft\Badaso\Module\POS\Providers;
 
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Uasoft\Badaso\Module\POS\BadasoPOSModule;
 use Uasoft\Badaso\Module\POS\Commands\BadasoPOSSetup;
@@ -21,17 +20,18 @@ class BadasoPOSModuleServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('FacadesBadasoPOSModule', FacadesBadasoPOSModule::class);
 
-        $router = $this->app->make(Router::class);
-
         $this->app->singleton('badaso-POS-module', function () {
             return new BadasoPOSModule();
         });
 
-        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+        $this->loadMigrationsFrom(__DIR__.'/../Migrations');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/api.php');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'badaso_POS');
 
         $this->publishes([
+            __DIR__.'/../Seeder' => database_path('seeders/Badaso/POS'),
             __DIR__.'/../Config/badaso-POS.php' => config_path('badaso-POS.php'),
-        ], 'badaso-POS-config');
+        ], 'badaso-POS-setup');
     }
 
     /**

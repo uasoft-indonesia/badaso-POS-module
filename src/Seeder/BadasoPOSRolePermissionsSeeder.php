@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Badaso\Content;
+namespace Database\Seeders\Badaso\POS;
 
 use Exception;
 use Illuminate\Database\Seeder;

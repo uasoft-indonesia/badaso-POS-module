@@ -12,7 +12,7 @@ class BadasoPOSSetup extends Command
      *
      * @var string
      */
-    protected $signature = 'badaso-sitemap:setup {--force=false}';
+    protected $signature = 'badaso-POS:setup {--force=false}';
 
     /**
      * The console command description.
@@ -55,7 +55,7 @@ class BadasoPOSSetup extends Command
     public function publishConfig()
     {
         $params = [
-            '--tag' => 'badaso-POS-config',
+            '--tag' => 'badaso-POS-setup',
             '--force' => $this->force,
         ];
         $this->call('vendor:publish', $params);

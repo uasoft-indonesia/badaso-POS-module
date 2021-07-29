@@ -13,20 +13,20 @@ class CreatePOSOrderDetailsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable(config('badaso.database.prefix').'order_details')) {
-            Schema::create(config('badaso.database.prefix').'order_details', function (Blueprint $table) {
+        if (!Schema::hasTable(config('badaso.database.prefix').'pos_order_details')) {
+            Schema::create(config('badaso.database.prefix').'pos_order_details', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('order_id');
                 $table->foreignId('product_detail_id');
                 $table->foreignId('discount_id')->nullable();
                 $table->double('price');
-                $table->double('discounted');
+                $table->double('discounted')->default(0);
                 $table->bigInteger('quantity');
                 $table->timestamps();
             });
 
-            Schema::table(config('badaso.database.prefix').'order_details', function (Blueprint $table) {
-                $table->foreign('order_id')->references('id')->on(config('badaso.database.prefix').'orders');
+            Schema::table(config('badaso.database.prefix').'pos_order_details', function (Blueprint $table) {
+                $table->foreign('order_id')->references('id')->on(config('badaso.database.prefix').'pos_orders');
                 $table->foreign('product_detail_id')->references('id')->on(config('badaso.database.prefix').'product_details');
                 $table->foreign('discount_id')->references('id')->on(config('badaso.database.prefix').'discounts')->onDelete('set null');
             });
@@ -40,6 +40,6 @@ class CreatePOSOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(config('badaso.database.prefix').'order_details');
+        Schema::dropIfExists(config('badaso.database.prefix').'pos_order_details');
     }
 }
