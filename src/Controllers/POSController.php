@@ -8,6 +8,6 @@ class POSController extends Controller
 {
     public function index()
     {
-        return view('pos-module::layout.app');
+        return view('pos-module::layouts.default');
     }
 }

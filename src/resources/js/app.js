@@ -1,22 +1,34 @@
-
 import Vue from "vue";
 import Vuesax from "vuesax";
-import VueRouter from "vue-router";
+import { Datetime } from "vue-datetime";
+import moment from "moment";
 
-import App from "./apps/App.vue";
-import store from '../../../../core/src/resources/js/store/store'
-import { PosRouter } from "./router/pos.routes";
-
-import "vuesax/dist/vuesax.css";
+import "vuesax/dist/vuesax.css"; //Vuesax styles
 import "material-icons/iconfont/material-icons.css";
 import "vue-datetime/dist/vue-datetime.css";
-import "../../../../core/src/resources/js/assets/scss/style.scss"
+import "../../../../core/src/resources/js/assets/scss/style.scss";
 
+import api from "./api/index";
+import store from "../../../../core/src/resources/js/store/store";
 
-Vue.use(VueRouter);
-Vue.use(Vuesax, {
-  // options here
-});
+import PosLayout from './layouts/PosLayout.vue'
+import PosNavbar from './components/PosNavbar.vue'
+import PosMain from './views/PosMain.vue'
+
+let prefix = process.env.MIX_BLOG_POST_URL_PREFIX
+  ? "/" + process.env.MIX_BLOG_POST_URL_PREFIX
+  : "";
+
+Vue.config.productionTip = false;
+Vue.config.devtools = true;
+
+Vue.use(Vuesax);
+Vue.component("datetime", Datetime);
+
+Vue.prototype.$api = api;
+Vue.prototype.$moment = (date, format) => {
+  return moment(date).format(format);
+};
 
 Vue.prototype.$isMobile =
   Math.min(window.screen.width, window.screen.height) < 768;
@@ -26,10 +38,12 @@ Vue.prototype.$constants = {
   DESKTOP: "desktop",
 };
 
+Vue.component("PosLayout", PosLayout)
+Vue.component("PosNavbar", PosNavbar)
+Vue.component("PosMain", PosMain)
+
+Vue.prototype.$baseUrl = "/";
 
 const app = new Vue({
-  el: "#app-pos",
-  components: { App },
-  router: PosRouter,
   store,
-});
+}).$mount("#pos-app");
