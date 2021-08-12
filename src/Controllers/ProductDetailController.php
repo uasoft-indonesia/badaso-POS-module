@@ -13,6 +13,50 @@ use Uasoft\Badaso\Module\POS\Models\POSProductDetail;
 
 class ProductDetailController extends Controller
 {
+    public function browse(Request $request)
+    {
+        try {
+            $request->validate([
+                'page' => 'sometimes|required|integer',
+                'limit' => 'sometimes|required|integer',
+                'relation' => 'nullable',
+            ]);
+
+            $data = [];
+
+            $product_details = POSProductDetail::when($request->relation, function ($query) use ($request) {
+                return $query->with(explode(',', $request->relation));
+            })->paginate($request->limit)->toArray();
+
+            $func_discounted = function ($discount, $price) {
+                return $price - ($price * ($discount / 100));
+            };
+
+            $product_details['data'] = collect($product_details['data'])->map(function ($item) use ($func_discounted) {
+                $item['discounted'] = 0;
+                if (isset($item['discount'])) {
+                    switch ($item['discount']['discount_type']) {
+                        case 'percent':
+                            $item['discounted'] = $func_discounted($item['discount']['discount_percent'], $item['price']);
+                            break;
+
+                        default:
+                            $item['discounted'] = $item['price'] - $item['discount']['discount_fixed'];
+                            break;
+                    }
+                }
+
+                return $item;
+            });
+
+            $data['productDetails'] = json_decode(json_encode($product_details));
+
+            return ApiResponse::success($data);
+        } catch (Exception $e) {
+            return ApiResponse::failed($e);
+        }
+    }
+
     public function add(Request $request)
     {
         DB::beginTransaction();

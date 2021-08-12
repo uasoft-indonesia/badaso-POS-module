@@ -91,7 +91,7 @@
             <template slot-scope="{ data }">
               <vs-tr :data="product" :key="index" v-for="(product, index) in data">
                 <vs-td :data="product.productImage">
-                  <img width="150" :src="$store.state.badaso.meta.mediaBaseUrl + product.productImage" loading="lazy">
+                  <img width="150" :src="product.productImage" loading="lazy">
                 </vs-td>
                 <vs-td :data="product.name">
                   {{ product.name }}

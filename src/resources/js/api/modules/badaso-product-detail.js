@@ -1,3 +1,4 @@
+import queryString from "../../../../../../core/src/resources/js/api/query-string";
 import resource from "../../../../../../core/src/resources/js/api/resource";
 
 let apiPrefix = process.env.MIX_API_ROUTE_PREFIX
@@ -5,6 +6,11 @@ let apiPrefix = process.env.MIX_API_ROUTE_PREFIX
   : "/badaso-api/module/pos";
 
 export default {
+  browse(data) {
+      let qs = queryString(data)
+    return resource.get(apiPrefix + "/v1/product-detail"+qs);
+  },
+
   add(data) {
     return resource.post(apiPrefix + "/v1/product-detail/add", data);
   },

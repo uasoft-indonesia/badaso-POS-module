@@ -9,11 +9,12 @@ import "vue-datetime/dist/vue-datetime.css";
 import "../../../../core/src/resources/js/assets/scss/style.scss";
 
 import api from "./api/index";
-import store from "../../../../core/src/resources/js/store/store";
+import store from "./store/badaso";
 
 import PosLayout from './layouts/PosLayout.vue'
 import PosNavbar from './components/PosNavbar.vue'
-import PosMain from './views/PosMain.vue'
+import PosMain from "./components/PosMain.vue";
+
 
 let prefix = process.env.MIX_BLOG_POST_URL_PREFIX
   ? "/" + process.env.MIX_BLOG_POST_URL_PREFIX

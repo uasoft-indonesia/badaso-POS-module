@@ -32,7 +32,7 @@
             </tr>
             <tr>
               <th>{{ $t("product.detail.header.productImage") }}</th>
-              <td><img width="100" v-if="product.productImage" :src="$store.state.badaso.meta.mediaBaseUrl + product.productImage" loading="lazy"></td>
+              <td><img width="100" v-if="product.productImage" :src="product.productImage" loading="lazy"></td>
             </tr>
             <tr>
               <th>{{ $t("product.detail.header.productCategory") }}</th>
@@ -57,7 +57,7 @@
         <vs-col vs-w="12" v-for="(productDetail, index) in product.productDetails" :key="index" class="product-details__item">
           <vs-card class="mb-0 product-details--card">
             <div slot="media">
-              <img width="100" v-if="productDetail.productImage" :src="$store.state.badaso.meta.mediaBaseUrl + productDetail.productImage" loading="lazy">
+              <img width="100" v-if="productDetail.productImage" :src="productDetail.productImage" loading="lazy">
             </div>
             <div>
               <h6 class="mb-0"><strong>{{ productDetail.name }}</strong></h6>

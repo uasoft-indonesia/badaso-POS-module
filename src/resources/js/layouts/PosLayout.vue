@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <pos-navbar />
     <slot></slot>
   </div>
 </template>

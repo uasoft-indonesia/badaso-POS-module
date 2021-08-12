@@ -61,6 +61,7 @@ Route::group(
             });
 
             Route::group(['prefix' => 'product-detail'], function () {
+                Route::get('/', 'ProductDetailController@browse')->middleware(BadasoCheckPermissions::class.':browse_product_details');
                 Route::post('/add', 'ProductDetailController@add')->middleware(BadasoCheckPermissions::class.':add_product_details');
                 Route::put('/edit', 'ProductDetailController@edit')->middleware(BadasoCheckPermissions::class.':edit_product_details');
                 Route::delete('/delete', 'ProductDetailController@delete')->middleware(BadasoCheckPermissions::class.':delete_product_details');
